@@ -22,6 +22,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 DFLAGS	=	-MMD -MP
 FFLAGS	=	-fsanitize=address
 IFLAGS	=	-Iinclude/
+LFLAGS	=	-L.local/lib -lreadline
 DEBUG	=	-g3
 FLAGS	=	$(CFLAGS) $(DFLAGS) $(IFLAGS)
 #FLAGS	+=	$(FFLAGS)
@@ -62,7 +63,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	@echo "$(YELLOW)Linking $(NAME)...$(DEF_COLOR)"
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) $(LFLAGS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(BLD_DIR)%.o:	$(SRC_DIR)%.c | $(OBJF)
