@@ -45,7 +45,19 @@ TES_DIR	=	tests/
 ## SOURCES ##
 #############
 
-SRC_FILES	=	minishell
+SRC_FILES	=	minishell \
+				ast/ast \
+				execution/exec \
+				execution/exec_and \
+				execution/exec_or \
+				execution/exec_pipe \
+				execution/exec_redir \
+				lexer/lexer \
+				parser/parser \
+				parser/parse_cmd \
+				parser/parse_pipe \
+				parser/parse_redir
+TES_FILES	=	test_lexer
 
 ########################
 ## INTERMEDIARY FILES ##
@@ -53,6 +65,8 @@ SRC_FILES	=	minishell
 
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ		=	$(addprefix $(BLD_DIR), $(addsuffix .o, $(SRC_FILES)))
+TES		=	$(addprefix $(TES_DIR), $(addsuffix .c, $(TES_FILES)))
+TOB		=	$(addprefix $(TES_DIR), $(addsuffix .o, $(TES_FILES)))
 OBJF	=	.cache_exists
 
 #############
@@ -60,6 +74,9 @@ OBJF	=	.cache_exists
 #############
 
 all:	$(NAME)
+
+test_lexer:	src/minishell.o tests/test_lexer.o
+	@$(CC) -lcriterion $^ -o $@
 
 $(NAME):	$(OBJ)
 	@echo "$(YELLOW)Linking $(NAME)...$(DEF_COLOR)"
